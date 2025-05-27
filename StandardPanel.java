@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class StandardPanel extends JPanel {
   public StandardPanel(Color bg) {
+    Color pbg = Color.black;
+    Color fg = new Color(255, 75, 0);
+
     this.setPreferredSize(new Dimension(450, 570));
     this.setBackground(bg);
 
@@ -11,6 +14,9 @@ public class StandardPanel extends JPanel {
     display.setHorizontalAlignment(SwingConstants.RIGHT);
     display.setFont(new Font("Arial", Font.PLAIN, 70));
     display.setPreferredSize(new Dimension(430, 150));
+    display.setBackground(pbg);
+    display.setBorder(BorderFactory.createLineBorder(fg));
+    display.setForeground(Color.lightGray);
 
     Font FONT = new Font("Arial", Font.BOLD, 30);
     Dimension SIMPLE = new Dimension(100, 70);
@@ -27,19 +33,22 @@ public class StandardPanel extends JPanel {
       JButton b = new JButton(icon);
       b.setPreferredSize((icon == "+" || icon == "=") ? TALL : (icon == "0") ? LONG : SIMPLE);
       b.setFont(FONT);
+      b.setBackground(pbg);
+      b.setForeground(fg);
+      b.setBorder(BorderFactory.createLineBorder(fg));
       buttons.add(b);
     }
 
     JPanel topCont = new JPanel();
-    topCont.setPreferredSize(new Dimension(430, 80));
+    topCont.setPreferredSize(new Dimension(430, 75));
     topCont.setBackground(bg);
 
     JPanel plusCont = new JPanel();
-    plusCont.setPreferredSize(new Dimension(320, 155));
+    plusCont.setPreferredSize(new Dimension(320, 150));
     plusCont.setBackground(bg);
 
     JPanel bottCont = new JPanel();
-    bottCont.setPreferredSize(new Dimension(320, 155));
+    bottCont.setPreferredSize(new Dimension(320, 150));
     bottCont.setBackground(bg);
 
     for (int i = 0; i < 4; i++)

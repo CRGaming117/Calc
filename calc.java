@@ -7,7 +7,7 @@ public class calc {
     JFrame window = new JFrame("Calc App");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    Color bg = Color.lightGray;
+    Color bg = Color.black;
 
     JPanel content = new JPanel();
     content.setPreferredSize(new Dimension(450, 600));
