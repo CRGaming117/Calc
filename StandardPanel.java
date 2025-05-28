@@ -1,8 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
+import org.python.util.PythonInterpreter;
 
 public class StandardPanel extends JPanel {
+
+  private JTextField display;
+  private ArrayList<JButton> buttons;
+
   public StandardPanel(Color bg) {
     Color pbg = Color.black;
     Color fg = new Color(255, 75, 0);
@@ -10,13 +16,14 @@ public class StandardPanel extends JPanel {
     this.setPreferredSize(new Dimension(450, 570));
     this.setBackground(bg);
 
-    JTextField display = new JTextField();
+    display = new JTextField();
     display.setHorizontalAlignment(SwingConstants.RIGHT);
     display.setFont(new Font("Arial", Font.PLAIN, 70));
     display.setPreferredSize(new Dimension(430, 150));
     display.setBackground(pbg);
     display.setBorder(BorderFactory.createLineBorder(fg));
     display.setForeground(Color.lightGray);
+    display.addActionListener(new AL());
 
     Font FONT = new Font("Arial", Font.BOLD, 30);
     Dimension SIMPLE = new Dimension(100, 70);
@@ -28,7 +35,7 @@ public class StandardPanel extends JPanel {
         "1", "2", "3",
         "0", ".",
         "+", "=" };
-    ArrayList<JButton> buttons = new ArrayList<JButton>();
+    buttons = new ArrayList<JButton>();
     for (String icon : icons) {
       JButton b = new JButton(icon);
       b.setPreferredSize((icon == "+" || icon == "=") ? TALL : (icon == "0") ? LONG : SIMPLE);
@@ -36,6 +43,7 @@ public class StandardPanel extends JPanel {
       b.setBackground(pbg);
       b.setForeground(fg);
       b.setBorder(BorderFactory.createLineBorder(fg));
+      b.addActionListener(new AL());
       buttons.add(b);
     }
 
@@ -64,5 +72,17 @@ public class StandardPanel extends JPanel {
     this.add(buttons.get(15)); // +
     this.add(bottCont);
     this.add(buttons.get(16)); // =
+  }
+
+  String calculate(String exp) {
+    return exp;
+  }
+
+  public class AL implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+      if (e.getSource() == display) {
+        display.setText(calculate(display.getText()));
+      }
+    }
   }
 }
