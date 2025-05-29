@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+// Will figure this out later
 import org.python.util.PythonInterpreter;
+import org.python.core.PyObject;
 
 public class StandardPanel extends JPanel {
 
@@ -23,7 +25,8 @@ public class StandardPanel extends JPanel {
     display.setBackground(pbg);
     display.setBorder(BorderFactory.createLineBorder(fg));
     display.setForeground(Color.lightGray);
-    display.addActionListener(new AL());
+    // display.addActionListener(new AL());
+    display.addKeyListener(new KeyFilter());
 
     Font FONT = new Font("Arial", Font.BOLD, 30);
     Dimension SIMPLE = new Dimension(100, 70);
@@ -72,17 +75,62 @@ public class StandardPanel extends JPanel {
     this.add(buttons.get(15)); // +
     this.add(bottCont);
     this.add(buttons.get(16)); // =
+
+    display.setFocusable(true);
   }
 
   String calculate(String exp) {
-    return exp;
+    ArrayList<Integer> symbols = new ArrayList<Integer>();
+    PythonInterpreter interpreter = new PythonInterpreter();
+    interpreter.set("display", display);
+    PyObject result = interpreter.eval(exp);
+
+    return result.toString();
   }
 
   public class AL implements ActionListener {
     public void actionPerformed(ActionEvent e) {
-      if (e.getSource() == display) {
-        display.setText(calculate(display.getText()));
+      /*
+       * if (e.getSourc:e() == display) {
+       * display.setText(calculate(display.getText()));
+       * }
+       */
+      for (JButton b : buttons) {
+        if (e.getSource() == b) {
+          if (b.getText() != "=")
+            display.setText(display.getText() + b.getText());
+          else
+            display.setText(calculate(display.getText()));
+        }
       }
+    }
+  }
+
+  public class KeyFilter implements KeyListener {
+    public void keyPressed(KeyEvent e) {
+      System.out.println("" + e.getKeyChar() + " " + (int) e.getKeyChar() + " " + e.getKeyCode());
+      String t = display.getText();
+      boolean isNum = (e.getKeyChar() >= '0' && e.getKeyChar() <= '9');
+      boolean isSymbol = (e.getKeyChar() == '+' || e.getKeyChar() == '-' || e.getKeyChar() == '*'
+          || e.getKeyChar() == '/' || e.getKeyChar() == '%');
+      if (isNum || isSymbol) {
+        display.setEditable(true);
+      } else {
+        display.setEditable(false);
+      }
+      if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+        display.setText(t.substring(0, t.length() - 1));
+      }
+      if (e.getKeyCode() == KeyEvent.VK_DELETE)
+        display.setText("");
+      if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+        System.exit(0);
+    }
+
+    public void keyReleased(KeyEvent e) {
+    }
+
+    public void keyTyped(KeyEvent e) {
     }
   }
 }
