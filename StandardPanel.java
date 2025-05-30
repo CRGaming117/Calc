@@ -10,6 +10,7 @@ public class StandardPanel extends JPanel {
 
   private JTextField display;
   private ArrayList<JButton> buttons;
+  private PythonInterpreter interpreter;
 
   public StandardPanel(Color bg) {
     Color pbg = Color.black;
@@ -27,6 +28,9 @@ public class StandardPanel extends JPanel {
     display.setForeground(Color.lightGray);
     display.addActionListener(new TextListener());
     display.addKeyListener(new KeyFilter());
+
+    interpreter = new PythonInterpreter();
+    interpreter.set("display", display);
 
     Font FONT = new Font("Arial", Font.BOLD, 30);
     Dimension SIMPLE = new Dimension(100, 70);
@@ -76,16 +80,12 @@ public class StandardPanel extends JPanel {
     this.add(bottCont);
     this.add(buttons.get(16)); // =
 
-    this.addKeyListener(new KL());
     this.setFocusable(true);
   }
 
   String calculate(String exp) {
     try {
-      PythonInterpreter interpreter = new PythonInterpreter();
-      interpreter.set("display", display);
-      PyObject result = interpreter.eval(exp);
-      return result.toString();
+      return interpreter.eval(exp).toString();
     } catch (Exception e) {
       return ((display.getText().isEmpty() || display.getText().equals("Error")) ? "" : "Error");
     }
@@ -125,6 +125,11 @@ public class StandardPanel extends JPanel {
       else
         display.setEditable(false);
 
+      if (e.getKeyCode() == KeyEvent.VK_F9)
+        display.setText(display.getText() + "-");
+
+      if (e.getKeyCode() == KeyEvent.VK_DELETE)
+        display.setText("");
     }
 
     public void keyReleased(KeyEvent e) {
@@ -138,16 +143,7 @@ public class StandardPanel extends JPanel {
     public void keyPressed(KeyEvent e) {
       // System.out.println("" + e.getKeyChar() + " " + (int) e.getKeyChar() + " " +
       // e.getKeyCode());
-      String t = display.getText();
-
-      if (e.getKeyCode() == KeyEvent.VK_F9)
-        display.setText(t + "-");
-
-      // if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
-      // display.setText(t.substring(0, t.length() - 1));
-
-      if (e.getKeyCode() == KeyEvent.VK_DELETE)
-        display.setText("");
+      System.out.println("Key Pressed in Panel");
 
       if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
         System.exit(0);
