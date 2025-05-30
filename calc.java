@@ -30,9 +30,10 @@ public class calc {
     content.add(modeBox);
     content.add(new StandardPanel(bg));
 
-    window.setResizable(false);
     window.getContentPane().add(content);
     window.pack();
+    window.setResizable(false);
+    window.setLocationRelativeTo(null);
     window.setVisible(true);
   }
 }
