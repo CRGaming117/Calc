@@ -25,6 +25,9 @@ public class calc extends JFrame implements ItemListener {
     String[] modes = { "Standard", "Scientific", "Graphing", "Sequence" };
     modeBox = new JComboBox<String>(modes);
     modeBox.setPreferredSize(new Dimension(430, 25));
+    modeBox.setBackground(bg);
+    modeBox.setForeground(fg);
+    modeBox.setBorder(BorderFactory.createLineBorder(fg));
     modeBox.addItemListener(c);
 
     standardPanel = new StandardPanel(bg, fg);

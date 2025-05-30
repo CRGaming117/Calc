@@ -24,7 +24,7 @@ public class StandardPanel extends JPanel {
     display.setPreferredSize(new Dimension(430, 150));
     display.setBackground(pbg);
     display.setBorder(BorderFactory.createLineBorder(fg));
-    display.setForeground(Color.lightGray);
+    display.setForeground(Color.gray);
     display.addActionListener(new TextListener());
     display.addKeyListener(new KeyFilter());
 
