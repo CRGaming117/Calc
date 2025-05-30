@@ -12,9 +12,8 @@ public class StandardPanel extends JPanel {
   private ArrayList<JButton> buttons;
   private PythonInterpreter interpreter;
 
-  public StandardPanel(Color bg) {
-    Color pbg = Color.black;
-    Color fg = new Color(255, 75, 0);
+  public StandardPanel(Color bg, Color fg) {
+    Color pbg = bg;
 
     this.setPreferredSize(new Dimension(450, 570));
     this.setBackground(bg);
@@ -79,8 +78,6 @@ public class StandardPanel extends JPanel {
     this.add(buttons.get(15)); // +
     this.add(bottCont);
     this.add(buttons.get(16)); // =
-
-    this.setFocusable(true);
   }
 
   String calculate(String exp) {
@@ -130,20 +127,6 @@ public class StandardPanel extends JPanel {
 
       if (e.getKeyCode() == KeyEvent.VK_DELETE)
         display.setText("");
-    }
-
-    public void keyReleased(KeyEvent e) {
-    }
-
-    public void keyTyped(KeyEvent e) {
-    }
-  }
-
-  public class KL implements KeyListener {
-    public void keyPressed(KeyEvent e) {
-      // System.out.println("" + e.getKeyChar() + " " + (int) e.getKeyChar() + " " +
-      // e.getKeyCode());
-      System.out.println("Key Pressed in Panel");
 
       if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
         System.exit(0);

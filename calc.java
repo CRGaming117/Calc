@@ -1,39 +1,65 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class calc {
+public class calc extends JFrame implements ItemListener {
+  static JFrame window;
+  static JComboBox<String> modeBox;
+  static JPanel content;
+  static StandardPanel standardPanel;
+
   public static void main(String[] args) {
-    JFrame window = new JFrame("Calc App");
+    Color bg = Color.black; // Background
+    Color fg = new Color(255, 75, 0); // Foreground
+
+    window = new JFrame("Calc App");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    Color bg = Color.black;
-
-    JPanel content = new JPanel();
+    content = new JPanel();
     content.setPreferredSize(new Dimension(450, 600));
     content.setBackground(bg);
 
-    /*
-     * JPanel modePanel = new JPanel();
-     * modePanel.setPreferredSize(new Dimension(w, 25));
-     * modePanel.setBackground(Color.white);
-     * 
-     * JLabel modeLabel = new JLabel(mode);
-     * modeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-     * modeLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-     */
+    calc c = new calc();
 
     String[] modes = { "Standard", "Scientific", "Graphing", "Sequence" };
-    JComboBox modeBox = new JComboBox(modes);
+    modeBox = new JComboBox<String>(modes);
     modeBox.setPreferredSize(new Dimension(430, 25));
+    modeBox.addItemListener(c);
 
+    standardPanel = new StandardPanel(bg, fg);
     content.add(modeBox);
-    content.add(new StandardPanel(bg));
+
+    content.add(standardPanel);
 
     window.getContentPane().add(content);
     window.pack();
     window.setResizable(false);
     window.setLocationRelativeTo(null);
     window.setVisible(true);
+  }
+
+  public void itemStateChanged(ItemEvent e) {
+    if (e.getSource() == modeBox) {
+      switch (modeBox.getSelectedIndex()) {
+        // Standard
+        case 0:
+          standardPanel.setVisible(true);
+          break;
+        // Scientific
+        case 1:
+          standardPanel.setVisible(false);
+          break;
+        // Graphing
+        case 2:
+          standardPanel.setVisible(false);
+          break;
+        // Sequence
+        case 3:
+          standardPanel.setVisible(false);
+          break;
+
+      }
+    }
   }
 }
