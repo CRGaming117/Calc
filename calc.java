@@ -37,6 +37,12 @@ public class calc extends JFrame implements ItemListener {
     window.setResizable(false);
     window.setLocationRelativeTo(null);
     window.setVisible(true);
+
+    SwingUtilities.invokeLater(() -> {
+      standardPanel.display.requestFocusInWindow();
+      standardPanel.display.selectAll();
+    });
+
   }
 
   public void itemStateChanged(ItemEvent e) {

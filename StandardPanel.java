@@ -8,7 +8,7 @@ import org.python.core.PyObject;
 
 public class StandardPanel extends JPanel {
 
-  private JTextField display;
+  public JTextField display;
   private ArrayList<JButton> buttons;
   private PythonInterpreter interpreter;
 
